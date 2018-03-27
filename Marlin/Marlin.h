@@ -320,19 +320,26 @@ void report_current_position();
     #define _SQRT(n) SQRT(n)
   #endif
 
-  // Macro to obtain the Z position of an individual tower
+/* Deltesian Code */
+
+   // Macro to obtain the Z position of an individual tower 
   #define DELTA_Z(V,T) V[Z_AXIS] + _SQRT(   \
     delta_diagonal_rod_2_tower[T] - HYPOT2( \
         delta_tower[T][X_AXIS] - V[X_AXIS], \
-        delta_tower[T][Y_AXIS] - V[Y_AXIS]  \
+        delta_tower[T][Y_AXIS]  \
       )                                     \
     )
+      //delta_tower[T][Y_AXIS] - V[Y_AXIS]
+
 
   #define DELTA_IK(V) do {        \
     delta[A_AXIS] = DELTA_Z(V, A_AXIS); \
     delta[B_AXIS] = DELTA_Z(V, B_AXIS); \
-    delta[C_AXIS] = DELTA_Z(V, C_AXIS); \
+    delta[C_AXIS] = raw[Y_AXIS]; \
   }while(0)
+    //delta[C_AXIS] = DELTA_Z(V, C_AXIS);
+
+// End Deltesian Code*/
 
 #elif IS_SCARA
   void forward_kinematics_SCARA(const float &a, const float &b);

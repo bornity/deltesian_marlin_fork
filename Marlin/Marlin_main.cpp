@@ -3837,7 +3837,7 @@ inline void gcode_G4() {
 
 #if ENABLED(DELTA)
 
-  /**
+  /** @homing deltesian
    * A delta can only safely home all axes at the same time
    * This is like quick_home_xy() but for 3 towers.
    */
@@ -3850,14 +3850,14 @@ inline void gcode_G4() {
     sync_plan_position();
 
     // Move all carriages together linearly until an endstop is hit.
-    current_position[X_AXIS] = current_position[Y_AXIS] = current_position[Z_AXIS] = (delta_height + 10);
+    current_position[X_AXIS] = current_position[Y_AXIS] = (delta_height + 10);
     feedrate_mm_s = homing_feedrate(X_AXIS);
     buffer_line_to_current_position();
     stepper.synchronize();
 
     // If an endstop was not hit, then damage can occur if homing is continued.
     // This can occur if the delta height not set correctly.
-    if (!(Endstops::endstop_hit_bits & (_BV(X_MAX) | _BV(Y_MAX) | _BV(Z_MAX)))) {
+    if (!(Endstops::endstop_hit_bits & (_BV(X_MAX) | _BV(Y_MAX)))) {
       LCD_MESSAGEPGM(MSG_ERR_HOMING_FAILED);
       SERIAL_ERROR_START();
       SERIAL_ERRORLNPGM(MSG_ERR_HOMING_FAILED);
@@ -3870,7 +3870,30 @@ inline void gcode_G4() {
     // Now re-home each carriage separately.
     HOMEAXIS(A);
     HOMEAXIS(B);
-    HOMEAXIS(C);
+
+  /* Deltesian
+  * Zero the Y_Axis seperately. If the effector is in a low position (close to the build plate), the HOMEAXIS(A) move will force the effector into the Y_Axis extrusion and can destroy rods, effector, bearing carriages etc. Not Good.
+  */
+
+    //current_position[Z_AXIS] = (Y_MAX_LENGTH + 20);  Y_BED_LENGTH
+    current_position[Z_AXIS] = (Y_BED_LENGTH + 20); 
+    feedrate_mm_s = homing_feedrate(X_AXIS);
+    buffer_line_to_current_position();
+    stepper.synchronize();
+
+    // If an endstop was not hit, then damage can occur if homing is continued.
+    // This can occur if the delta height not set correctly.
+    if (!(Endstops::endstop_hit_bits & (_BV(Z_MAX)))) {
+      LCD_MESSAGEPGM(MSG_ERR_HOMING_FAILED);
+      SERIAL_ERROR_START();
+      SERIAL_ERRORLNPGM(MSG_ERR_HOMING_FAILED);
+      return false;
+    }
+
+    endstops.hit_on_purpose();
+
+  // The Y_Axis carriage has hit the endstop. Re-home Y.
+    HOMEAXIS(Z);
 
     // Set all carriages to their home positions
     // Do this here all at once for Delta, because
@@ -12668,11 +12691,11 @@ void ok_to_send() {
   void recalc_delta_settings() {
     const float trt[ABC] = DELTA_RADIUS_TRIM_TOWER,
                 drt[ABC] = DELTA_DIAGONAL_ROD_TRIM_TOWER;
-    delta_tower[A_AXIS][X_AXIS] = cos(RADIANS(210 + delta_tower_angle_trim[A_AXIS])) * (delta_radius + trt[A_AXIS]); // front left tower
-    delta_tower[A_AXIS][Y_AXIS] = sin(RADIANS(210 + delta_tower_angle_trim[A_AXIS])) * (delta_radius + trt[A_AXIS]);
-    delta_tower[B_AXIS][X_AXIS] = cos(RADIANS(330 + delta_tower_angle_trim[B_AXIS])) * (delta_radius + trt[B_AXIS]); // front right tower
-    delta_tower[B_AXIS][Y_AXIS] = sin(RADIANS(330 + delta_tower_angle_trim[B_AXIS])) * (delta_radius + trt[B_AXIS]);
-    delta_tower[C_AXIS][X_AXIS] = cos(RADIANS( 90 + delta_tower_angle_trim[C_AXIS])) * (delta_radius + trt[C_AXIS]); // back middle tower
+    delta_tower[A_AXIS][X_AXIS] = cos(RADIANS(0 + delta_tower_angle_trim[A_AXIS])) * (delta_radius + trt[A_AXIS]); // front left tower
+    delta_tower[A_AXIS][Y_AXIS] = sin(RADIANS(0 + delta_tower_angle_trim[A_AXIS])) * (delta_radius + trt[A_AXIS]);
+    delta_tower[B_AXIS][X_AXIS] = cos(RADIANS(180 + delta_tower_angle_trim[B_AXIS])) * (delta_radius + trt[B_AXIS]); // front right tower
+    delta_tower[B_AXIS][Y_AXIS] = sin(RADIANS(180 + delta_tower_angle_trim[B_AXIS])) * (delta_radius + trt[B_AXIS]);
+    delta_tower[C_AXIS][X_AXIS] = cos(RADIANS( 90 + delta_tower_angle_trim[C_AXIS])) * (delta_radius + trt[C_AXIS]); // back middle tower // [bornity]: wtf do we do with this tower???
     delta_tower[C_AXIS][Y_AXIS] = sin(RADIANS( 90 + delta_tower_angle_trim[C_AXIS])) * (delta_radius + trt[C_AXIS]);
     delta_diagonal_rod_2_tower[A_AXIS] = sq(delta_diagonal_rod + drt[A_AXIS]);
     delta_diagonal_rod_2_tower[B_AXIS] = sq(delta_diagonal_rod + drt[B_AXIS]);
@@ -12820,14 +12843,14 @@ void ok_to_send() {
     // We now have the d, i and j values defined in Wikipedia.
     // Plug them into the equations defined in Wikipedia for Xnew, Ynew and Znew
     Xnew = (delta_diagonal_rod_2_tower[A_AXIS] - delta_diagonal_rod_2_tower[B_AXIS] + sq(d)) / (d * 2),
-    Ynew = ((delta_diagonal_rod_2_tower[A_AXIS] - delta_diagonal_rod_2_tower[C_AXIS] + HYPOT2(i, j)) / 2 - i * Xnew) / j,
+    Ynew = 0,
     Znew = SQRT(delta_diagonal_rod_2_tower[A_AXIS] - HYPOT2(Xnew, Ynew));
 
     // Start from the origin of the old coordinates and add vectors in the
     // old coords that represent the Xnew, Ynew and Znew to find the point
     // in the old system.
     cartes[X_AXIS] = delta_tower[A_AXIS][X_AXIS] + ex[0] * Xnew + ey[0] * Ynew - ez[0] * Znew;
-    cartes[Y_AXIS] = delta_tower[A_AXIS][Y_AXIS] + ex[1] * Xnew + ey[1] * Ynew - ez[1] * Znew;
+    cartes[Y_AXIS] = 0;
     cartes[Z_AXIS] =             z1 + ex[2] * Xnew + ey[2] * Ynew - ez[2] * Znew;
   }
 
@@ -12851,7 +12874,7 @@ void get_cartesian_from_steppers() {
     forward_kinematics_DELTA(
       stepper.get_axis_position_mm(A_AXIS),
       stepper.get_axis_position_mm(B_AXIS),
-      stepper.get_axis_position_mm(C_AXIS)
+      stepper.get_axis_position_mm(Y_AXIS)
     );
   #else
     #if IS_SCARA
