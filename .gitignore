@@ -146,5 +146,5 @@ CMakeListsPrivate.txt
 #CLion
 cmake-build-*
 
-#Folder name 'sublime'
+# Ignore folder named `sublime`
 sublime/
