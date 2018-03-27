@@ -1,0 +1,290 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_marlin_fork/Marlin"
+	],
+	"file_history":
+	[
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha_test/firmware/deltesian-inverse-kinematics-rewrite/Marlin_main.cpp",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha_test/firmware/deltesian-inverse-kinematics-rewrite/Marlin.h",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha_test/firmware/deltesian-inverse-kinematics-rewrite/macros.h",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha_test/firmware/deltesian-inverse-kinematics-rewrite/MarlinSerial.cpp",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha_test/firmware/deltesian-inverse-kinematics-rewrite/stepper.h",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha_test/firmware/deltesian-proof-of-concept-firmware/Conditionals_post.h",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha_test/firmware/deltesian-inverse-kinematics-rewrite/Configuration.h",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha_test/firmware/deltesian-inverse-kinematics-rewrite/MarlinConfig.h",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha_test/firmware/deltesian-inverse-kinematics-rewrite/Conditionals_post.h",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha_test/firmware/deltesian-inverse-kinematics-rewrite/configuration_store.cpp",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha_test/firmware/deltesian-proof-of-concept-firmware/Marlin.h",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/Marlin-Deltesian-Alpha/Configuration.h",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha/Marlin-Deltesian-Alpha/Marlin-Deltesian-Alpha.ino",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha/Marlin-Deltesian-Alpha/Marlin_main.cpp",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha/Marlin-Deltesian-Alpha/Configuration.h",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha/Marlin-Deltesian-Alpha/Conditionals_post.h",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha/Marlin-Deltesian-Alpha/configuration_store.h",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha/Marlin-Deltesian-Alpha/Configuration_adv.h",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha/deltesian_alpha/Marlin_main.cpp",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha/deltesian_alpha/configuration_store.h",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha/deltesian_alpha/Configuration_adv.h",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha/deltesian_alpha/Configuration.h",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha/deltesian_alpha/configuration_store.cpp",
+		"/E/Dropbox/3D Printing/_Deltesian/_git_deltesian/deltesian_alpha/deltesian_alpha.ino",
+		"/E/Dropbox/3D Printing/_Deltesian/Anycubic_kossel/Anycubic_kossel.ino"
+	],
+	"find":
+	{
+		"height": 41.0
+	},
+	"find_in_files":
+	{
+		"height": 105.0,
+		"where_history":
+		[
+			"E:\\Dropbox\\3D Printing\\_Deltesian\\_git_deltesian\\deltesian_alpha_test\\firmware\\deltesian-inverse-kinematics-rewrite",
+			"<open folders>",
+			"<open folders>delta_tower_angle_trim",
+			"E:\\Dropbox\\3D Printing\\_Deltesian\\_git_deltesian\\deltesian_alpha\\firmware\\deltesian-proof-of-concept-firmware",
+			"E:\\Dropbox\\3D Printing\\_Deltesian\\_git_deltesian\\deltesian_alpha\\Marlin-Deltesian-Alpha",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"KosselFAN2_PIN",
+			"1.1.8",
+			"bornity",
+			"MANUAL_Y_HOME_POS",
+			"manual_z_hom",
+			"Z_home_",
+			"delta",
+			"DEFAULT_AXIS_STEPS_PER_UNIT ",
+			"Y_axis",
+			"m665",
+			"180",
+			"deltesian",
+			"200",
+			"inverse kinemat",
+			"Z_MAX_LENGTH",
+			"inver",
+			"invert",
+			");\n",
+			"homing",
+			"homin",
+			"MANUAL_Z_HOME_POS",
+			"invert",
+			"endstop",
+			"invert",
+			"Z_HOME_DIR",
+			"do_homing_move",
+			"HOMEAXIS",
+			"direction",
+			"z_min",
+			"invert",
+			"homing",
+			"invert",
+			"MANUAL_Y_HOME_POS",
+			"z_max",
+			"DELTA_IK",
+			"inverse kin",
+			"inverse",
+			"delta_safe_distance_from_top",
+			"Config_PrintSettings_Debug",
+			"process_next_command",
+			"elta_angle_trim_tower_a",
+			"endstop_adj",
+			"m665",
+			"endstop",
+			"recalc_delta_settings(",
+			"parser.",
+			"void homeaxis()",
+			"void homeaxis(AxisEnum)",
+			"bornity",
+			"inverse ki",
+			"delta",
+			"delta_tower",
+			"delta",
+			"delta_tower_angle_trim",
+			"[bornity] [deltesian]",
+			"delta[C_AXIS]",
+			"_DDR",
+			"deltesian",
+			"home",
+			"offset",
+			"home",
+			"invert",
+			"home",
+			"smooth",
+			"23",
+			"delta",
+			"4000",
+			"bornity",
+			"z_home",
+			"z_",
+			"offset",
+			"home",
+			"tower",
+			"version",
+			"delte_",
+			"offset",
+			"invers",
+			"delta",
+			"angle",
+			"degree",
+			"deltesian",
+			"bornity",
+			"homing",
+			"MANUAL_Y_HOME_POS",
+			"y_home"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"folders":
+	[
+		{
+			"path": "E:\\Dropbox\\3D Printing\\_Deltesian\\_git_deltesian\\deltesian_marlin_fork\\Marlin"
+		}
+	],
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 278.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

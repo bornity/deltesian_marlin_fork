@@ -12688,6 +12688,16 @@ void ok_to_send() {
    * Recalculate factors used for delta kinematics whenever
    * settings have been changed (e.g., by M665).
    */
+
+
+  /* Deltesian Kinematics 
+
+  Set Towers 180 deg opposed.
+
+  [bornity]: Not a fan of the hard coded tower angles
+
+  */
+
   void recalc_delta_settings() {
     const float trt[ABC] = DELTA_RADIUS_TRIM_TOWER,
                 drt[ABC] = DELTA_DIAGONAL_ROD_TRIM_TOWER;
