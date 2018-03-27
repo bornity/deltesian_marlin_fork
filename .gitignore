@@ -145,3 +145,6 @@ CMakeListsPrivate.txt
 
 #CLion
 cmake-build-*
+
+#Folder name 'sublime'
+sublime/
