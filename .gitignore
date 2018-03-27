@@ -147,4 +147,4 @@ CMakeListsPrivate.txt
 cmake-build-*
 
 # Ignore folder named `sublime`
-sublime/
+sublime
