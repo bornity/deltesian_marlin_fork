@@ -12737,7 +12737,7 @@ void ok_to_send() {
   #endif
 
   /**
-   * Delta Inverse Kinematics
+   * Deltesian Inverse Kinematics
    *
    * Calculate the tower positions for a given machine
    * position, storing the result in the delta[] array.
@@ -12805,89 +12805,46 @@ void ok_to_send() {
    * based on a Java function from "Delta Robot Kinematics V3"
    * by Steve Graves
    *
-   * The result is stored in the cartes[] array.
+  * The result is stored in the cartes[] array.
+   *
+   * Deltesian Kinematics Simplification
+   * by Rob [bornity] Stuart 2018-03-27
+   *
+  
    */
   void forward_kinematics_DELTA(float z1, float z2, float z3) {
     // Create a vector in old coordinates along x axis of new coordinate
-    // Y Component is Zero for Deltesian
+    
+    // Deltesian Y Component is Zero
     const float p12[] = {
       delta_tower[B_AXIS][X_AXIS] - delta_tower[A_AXIS][X_AXIS],
       0,
       z2 - z1
     },
-/*
-     const float p12[] = {
-      delta_tower[B_AXIS][X_AXIS] - delta_tower[A_AXIS][X_AXIS],
-      delta_tower[B_AXIS][Y_AXIS] - delta_tower[A_AXIS][Y_AXIS],
-      z2 - z1
-    },
-*/
+
     // Get the Magnitude of vector.
     d = SQRT(sq(p12[0]) + sq(p12[1]) + sq(p12[2])),
 
     // Create unit vector by dividing by magnitude.
     ex[3] = { p12[0] / d, p12[1] / d, p12[2] / d },
 
-
-/* [bornity]: IS THIS NEEDED FOR THE DELTESIAN???
-
-    // Get the vector from the origin of the new system to the third point.
-    p13[3] = {
-      delta_tower[C_AXIS][X_AXIS] - delta_tower[A_AXIS][X_AXIS],
-      delta_tower[C_AXIS][Y_AXIS] - delta_tower[A_AXIS][Y_AXIS],
-      z3 - z1
-    },
-
-
-
-    // Use the dot product to find the component of this vector on the X axis.
-    i = ex[0] * p13[0] + ex[1] * p13[1] + ex[2] * p13[2],
-
-    // Create a vector along the x axis that represents the x component of p13.
-    iex[] = { ex[0] * i, ex[1] * i, ex[2] * i };
-
-    // Subtract the X component from the original vector leaving only Y. We use the
-    // variable that will be the unit vector after we scale it.
-    float ey[3] = { p13[0] - iex[0], p13[1] - iex[1], p13[2] - iex[2] };
-
-    // The magnitude of Y component
-    const float j = SQRT(sq(ey[0]) + sq(ey[1]) + sq(ey[2]));
-
-    // Convert to a unit vector
-    ey[0] /= j; ey[1] /= j;  ey[2] /= j;
-
-    // The cross product of the unit x and y is the unit z
-    // float[] ez = vectorCrossProd(ex, ey);
-    const float ez[3] = {
-      ex[1] * ey[2] - ex[2] * ey[1],
-      ex[2] * ey[0] - ex[0] * ey[2],
-      ex[0] * ey[1] - ex[1] * ey[0]
-    },
-
-
-// End Deltesian Do we even need this? */
-
-
-    // We now have the d, i and j values defined in Wikipedia.
-    // Plug them into the equations defined in Wikipedia for Xnew, Ynew and Znew
+    // Deltesian
+    // We now have the d & i values defined in Wikipedia.
+    // Plug them into the equations defined in Wikipedia for Xnew & Znew. Ynew = 0.
     Xnew = (delta_diagonal_rod_2_tower[A_AXIS] - delta_diagonal_rod_2_tower[B_AXIS] + sq(d)) / (d * 2),
     Ynew = 0,
     Znew = SQRT(delta_diagonal_rod_2_tower[A_AXIS] - HYPOT2(Xnew, Ynew));
 
     // Start from the origin of the old coordinates and add vectors in the
-    // old coords that represent the Xnew, Ynew and Znew to find the point
-    // in the old system.
-    // Deltesian
-    // Eliminate all the cross product stuff.
+    // old coords that represent the Xnew and Znew to find the point
+    // in the old system.  
+
+    // Deltesian KINEMATICS
+    // Eliminate all the cross product results.
+    // Y_Axis Recieves no updates
     cartes[X_AXIS] = delta_tower[A_AXIS][X_AXIS] + Xnew - Znew;
     cartes[Y_AXIS] = 0;
     cartes[Z_AXIS] = z1 + Xnew - Znew;
-
-/*
-    cartes[X_AXIS] = delta_tower[A_AXIS][X_AXIS] + ex[0] * Xnew + ey[0] * Ynew - ez[0] * Znew;
-    cartes[Y_AXIS] = 0;
-    cartes[Z_AXIS] =             z1 + ex[2] * Xnew + ey[2] * Ynew - ez[2] * Znew;
-*/
   }
 
   void forward_kinematics_DELTA(float point[ABC]) {
