@@ -12705,13 +12705,14 @@ void ok_to_send() {
     delta_tower[A_AXIS][Y_AXIS] = sin(RADIANS(0 + delta_tower_angle_trim[A_AXIS])) * (delta_radius + trt[A_AXIS]);
     delta_tower[B_AXIS][X_AXIS] = cos(RADIANS(180 + delta_tower_angle_trim[B_AXIS])) * (delta_radius + trt[B_AXIS]); // front right tower
     delta_tower[B_AXIS][Y_AXIS] = sin(RADIANS(180 + delta_tower_angle_trim[B_AXIS])) * (delta_radius + trt[B_AXIS]);
-    delta_tower[C_AXIS][X_AXIS] = cos(RADIANS( 90 + delta_tower_angle_trim[C_AXIS])) * (delta_radius + trt[C_AXIS]); // back middle tower // [bornity]: wtf do we do with this tower???
-    delta_tower[C_AXIS][Y_AXIS] = sin(RADIANS( 90 + delta_tower_angle_trim[C_AXIS])) * (delta_radius + trt[C_AXIS]);
+    //delta_tower[C_AXIS][X_AXIS] = cos(RADIANS( 90 + delta_tower_angle_trim[C_AXIS])) * (delta_radius + trt[C_AXIS]); // back middle tower // [bornity]: wtf do we do with this tower???
+    //delta_tower[C_AXIS][Y_AXIS] = sin(RADIANS( 90 + delta_tower_angle_trim[C_AXIS])) * (delta_radius + trt[C_AXIS]);
     delta_diagonal_rod_2_tower[A_AXIS] = sq(delta_diagonal_rod + drt[A_AXIS]);
     delta_diagonal_rod_2_tower[B_AXIS] = sq(delta_diagonal_rod + drt[B_AXIS]);
-    delta_diagonal_rod_2_tower[C_AXIS] = sq(delta_diagonal_rod + drt[C_AXIS]);
+    //delta_diagonal_rod_2_tower[C_AXIS] = sq(delta_diagonal_rod + drt[C_AXIS]);
     update_software_endstops(Z_AXIS);
-    axis_homed[X_AXIS] = axis_homed[Y_AXIS] = axis_homed[Z_AXIS] = false;
+    //axis_homed[X_AXIS] = axis_homed[Y_AXIS] = axis_homed[Z_AXIS] = false;
+    axis_homed[X_AXIS] = axis_homed[Y_AXIS] = false;
   }
 
   #if ENABLED(DELTA_FAST_SQRT)
@@ -12808,17 +12809,27 @@ void ok_to_send() {
    */
   void forward_kinematics_DELTA(float z1, float z2, float z3) {
     // Create a vector in old coordinates along x axis of new coordinate
+    // Y Component is Zero for Deltesian
     const float p12[] = {
+      delta_tower[B_AXIS][X_AXIS] - delta_tower[A_AXIS][X_AXIS],
+      0,
+      z2 - z1
+    },
+/*
+     const float p12[] = {
       delta_tower[B_AXIS][X_AXIS] - delta_tower[A_AXIS][X_AXIS],
       delta_tower[B_AXIS][Y_AXIS] - delta_tower[A_AXIS][Y_AXIS],
       z2 - z1
     },
-
+*/
     // Get the Magnitude of vector.
     d = SQRT(sq(p12[0]) + sq(p12[1]) + sq(p12[2])),
 
     // Create unit vector by dividing by magnitude.
     ex[3] = { p12[0] / d, p12[1] / d, p12[2] / d },
+
+
+/* [bornity]: IS THIS NEEDED FOR THE DELTESIAN???
 
     // Get the vector from the origin of the new system to the third point.
     p13[3] = {
@@ -12826,6 +12837,8 @@ void ok_to_send() {
       delta_tower[C_AXIS][Y_AXIS] - delta_tower[A_AXIS][Y_AXIS],
       z3 - z1
     },
+
+
 
     // Use the dot product to find the component of this vector on the X axis.
     i = ex[0] * p13[0] + ex[1] * p13[1] + ex[2] * p13[2],
@@ -12850,6 +12863,11 @@ void ok_to_send() {
       ex[2] * ey[0] - ex[0] * ey[2],
       ex[0] * ey[1] - ex[1] * ey[0]
     },
+
+
+// End Deltesian Do we even need this? */
+
+
     // We now have the d, i and j values defined in Wikipedia.
     // Plug them into the equations defined in Wikipedia for Xnew, Ynew and Znew
     Xnew = (delta_diagonal_rod_2_tower[A_AXIS] - delta_diagonal_rod_2_tower[B_AXIS] + sq(d)) / (d * 2),
@@ -12859,9 +12877,17 @@ void ok_to_send() {
     // Start from the origin of the old coordinates and add vectors in the
     // old coords that represent the Xnew, Ynew and Znew to find the point
     // in the old system.
+    // Deltesian
+    // Eliminate all the cross product stuff.
+    cartes[X_AXIS] = delta_tower[A_AXIS][X_AXIS] + Xnew - Znew;
+    cartes[Y_AXIS] = 0;
+    cartes[Z_AXIS] = z1 + Xnew - Znew;
+
+/*
     cartes[X_AXIS] = delta_tower[A_AXIS][X_AXIS] + ex[0] * Xnew + ey[0] * Ynew - ez[0] * Znew;
     cartes[Y_AXIS] = 0;
     cartes[Z_AXIS] =             z1 + ex[2] * Xnew + ey[2] * Ynew - ez[2] * Znew;
+*/
   }
 
   void forward_kinematics_DELTA(float point[ABC]) {
