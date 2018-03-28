@@ -12805,17 +12805,16 @@ void ok_to_send() {
    * based on a Java function from "Delta Robot Kinematics V3"
    * by Steve Graves
    *
-  * The result is stored in the cartes[] array.
+   * The result is stored in the cartes[] array.
    *
    * Deltesian Kinematics Simplification
    * by Rob [bornity] Stuart 2018-03-27
    *
-  
    */
+
   void forward_kinematics_DELTA(float z1, float z2, float z3) {
-    // Create a vector in old coordinates along x axis of new coordinate
-    
-    // Deltesian Y Component is Zero
+    // Create a vector in old coordinates along x axis of new coordinate.
+    // Deltesian Y vector component is Zero.
     const float p12[] = {
       delta_tower[B_AXIS][X_AXIS] - delta_tower[A_AXIS][X_AXIS],
       z2 - z1
@@ -12824,21 +12823,19 @@ void ok_to_send() {
     // Get the Magnitude of vector.
     d = SQRT(sq(p12[0]) + sq(p12[1])),
 
-    // Create unit vector by dividing by magnitude.
-    //ex[3] = { p12[0] / d, p12[1] / d},
-
     // We now have the d & i values defined in Wikipedia.
     // Plug them into the equations defined in Wikipedia for Xnew & Znew.
     Xnew = (delta_diagonal_rod_2_tower[A_AXIS] - delta_diagonal_rod_2_tower[B_AXIS] + sq(d)) / (d * 2),
     Znew = SQRT(delta_diagonal_rod_2_tower[A_AXIS] - Xnew);
 
-    // Start from the origin of the old coordinates and add vectors in the
-    // old coords that represent the Xnew and Znew to find the point
-    // in the old system.  
-
-    // Deltesian KINEMATICS
-    // Eliminate all the cross product results.
-    // Y_Axis Recieves no updates
+    /** 
+    *   Start from the origin of the old coordinates and add vectors in the
+    *   old coords that represent the Xnew and Znew to find the point
+    *   in the old system.  
+    *
+    *   Send the updates to the X_Axis and Z_Axis.
+    *   Y_Axis recieves no updates.
+    */
     cartes[X_AXIS] = delta_tower[A_AXIS][X_AXIS] + Xnew - Znew;
     cartes[Z_AXIS] = z1 + Xnew - Znew;
   }
