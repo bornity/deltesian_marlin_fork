@@ -12818,22 +12818,19 @@ void ok_to_send() {
     // Deltesian Y Component is Zero
     const float p12[] = {
       delta_tower[B_AXIS][X_AXIS] - delta_tower[A_AXIS][X_AXIS],
-      0,
       z2 - z1
     },
 
     // Get the Magnitude of vector.
-    d = SQRT(sq(p12[0]) + sq(p12[1]) + sq(p12[2])),
+    d = SQRT(sq(p12[0]) + sq(p12[1])),
 
     // Create unit vector by dividing by magnitude.
-    ex[3] = { p12[0] / d, p12[1] / d, p12[2] / d },
+    //ex[3] = { p12[0] / d, p12[1] / d},
 
-    // Deltesian
     // We now have the d & i values defined in Wikipedia.
-    // Plug them into the equations defined in Wikipedia for Xnew & Znew. Ynew = 0.
+    // Plug them into the equations defined in Wikipedia for Xnew & Znew.
     Xnew = (delta_diagonal_rod_2_tower[A_AXIS] - delta_diagonal_rod_2_tower[B_AXIS] + sq(d)) / (d * 2),
-    Ynew = 0,
-    Znew = SQRT(delta_diagonal_rod_2_tower[A_AXIS] - HYPOT2(Xnew, Ynew));
+    Znew = SQRT(delta_diagonal_rod_2_tower[A_AXIS] - Xnew);
 
     // Start from the origin of the old coordinates and add vectors in the
     // old coords that represent the Xnew and Znew to find the point
@@ -12843,7 +12840,6 @@ void ok_to_send() {
     // Eliminate all the cross product results.
     // Y_Axis Recieves no updates
     cartes[X_AXIS] = delta_tower[A_AXIS][X_AXIS] + Xnew - Znew;
-    cartes[Y_AXIS] = 0;
     cartes[Z_AXIS] = z1 + Xnew - Znew;
   }
 
