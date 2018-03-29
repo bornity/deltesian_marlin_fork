@@ -12826,7 +12826,7 @@ void ok_to_send() {
     // We now have the d & i values defined in Wikipedia.
     // Plug them into the equations defined in Wikipedia for Xnew & Znew.
     Xnew = (delta_diagonal_rod_2_tower[A_AXIS] - delta_diagonal_rod_2_tower[B_AXIS] + sq(d)) / (d * 2),
-    Znew = SQRT(delta_diagonal_rod_2_tower[A_AXIS] - Xnew);
+    Znew = SQRT(delta_diagonal_rod_2_tower[A_AXIS] - sq(Xnew));
 
     /** 
     *   Start from the origin of the old coordinates and add vectors in the
