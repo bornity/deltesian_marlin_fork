@@ -1,3 +1,13 @@
+# Deltesian 3D Printer Firmware
+
+## Deltesian Marlin Fork
+
+This is a fork of Marlin 1.1.8, designed for RAMPS-compatible boards driving Deltesian 3D printers. Delta printer functionality has been modified to support Deltesian kinematics.
+
+## Future Development
+
+Migrate Deltesian code into the official Marlin 2.x codebase.
+
 # Marlin 3D Printer Firmware
 <img align="right" src="../../raw/1.1.x/buildroot/share/pixmaps/logo/marlin-250.png" />
 
