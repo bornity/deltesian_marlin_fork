@@ -467,7 +467,11 @@ class Planner {
       #endif
       #if IS_KINEMATIC
         inverse_kinematics(raw);
-        buffer_segment(delta[A_AXIS], delta[B_AXIS], delta[C_AXIS], cart[E_AXIS], fr_mm_s, extruder);
+        #if ENABLED(DELTESIAN)
+          buffer_segment(delta[A_AXIS], delta[B_AXIS], raw[Y_AXIS], cart[E_AXIS], fr_mm_s, extruder);
+        #else
+          buffer_segment(delta[A_AXIS], delta[B_AXIS], delta[C_AXIS], cart[E_AXIS], fr_mm_s, extruder);
+        #endif
       #else
         buffer_segment(raw[X_AXIS], raw[Y_AXIS], raw[Z_AXIS], cart[E_AXIS], fr_mm_s, extruder);
       #endif
