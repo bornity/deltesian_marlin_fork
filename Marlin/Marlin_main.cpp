@@ -13122,21 +13122,37 @@ void set_current_from_steppers_for_axis(const AxisEnum axis) {
     // Get the top feedrate of the move in the XY plane
     const float _feedrate_mm_s = MMS_SCALED(feedrate_mm_s);
 
-    const float xdiff = rtarget[X_AXIS] - current_position[X_AXIS],
-                ydiff = rtarget[Y_AXIS] - current_position[Y_AXIS];
+    #if ENABLED(DELTESIAN_SKIP_Y_SEGMENTS)
+      const float xdiff = rtarget[X_AXIS] - current_position[X_AXIS];
 
-    // If the move is only in Z/E don't split up the move
-    if (!xdiff && !ydiff) {
-      planner.buffer_line_kinematic(rtarget, _feedrate_mm_s, active_extruder);
-      return false; // caller will update current_position
-    }
+      // If the move is only in Y/Z/E don't split up the move
+      if (!xdiff) {
+        planner.buffer_line_kinematic(rtarget, _feedrate_mm_s, active_extruder);
+        return false; // caller will update current_position
+      }
+    #else
+      const float xdiff = rtarget[X_AXIS] - current_position[X_AXIS],
+                  ydiff = rtarget[Y_AXIS] - current_position[Y_AXIS];
+
+      // If the move is only in Z/E don't split up the move
+      if (!xdiff && !ydiff) {
+        planner.buffer_line_kinematic(rtarget, _feedrate_mm_s, active_extruder);
+        return false; // caller will update current_position
+      }
+    #endif
 
     // Fail if attempting move outside printable radius
     if (!position_is_reachable(rtarget[X_AXIS], rtarget[Y_AXIS])) return true;
 
     // Remaining cartesian distances
+    #if ENABLED(DELTESIAN_SKIP_Y_SEGMENTS)
+    const float ydiff = rtarget[Y_AXIS] - current_position[Y_AXIS],
+                zdiff = rtarget[Z_AXIS] - current_position[Z_AXIS],
+                ediff = rtarget[E_AXIS] - current_position[E_AXIS];
+    #else
     const float zdiff = rtarget[Z_AXIS] - current_position[Z_AXIS],
                 ediff = rtarget[E_AXIS] - current_position[E_AXIS];
+    #endif
 
     // Get the linear distance in XYZ
     // If the move is very short, check the E move distance
@@ -13151,6 +13167,7 @@ void set_current_from_steppers_for_axis(const AxisEnum axis) {
     // The number of segments-per-second times the duration
     // gives the number of segments
     uint16_t segments = delta_segments_per_second * seconds;
+    
 
     // For SCARA minimum segment size is 0.25mm
     #if IS_SCARA
